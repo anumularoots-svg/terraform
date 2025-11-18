@@ -42,7 +42,7 @@ module "ecr" {
 # EKS Module
 module "eks" {
   source = "./modules/eks"
-
+  
   project_name           = var.project_name
   environment            = var.environment
   cluster_version        = var.eks_cluster_version
@@ -51,10 +51,16 @@ module "eks" {
   public_subnet_ids      = module.vpc.public_subnet_ids
   cluster_security_group = module.security.eks_cluster_sg_id
   node_security_group    = module.security.eks_node_sg_id
+  
+  # ✅ ADD THESE TWO MISSING REQUIRED ARGUMENTS:
+  cluster_role_arn       = module.iam.eks_cluster_role_arn
+  node_role_arn          = module.iam.eks_node_role_arn
+  
   node_instance_types    = var.eks_node_instance_types
   desired_capacity       = var.eks_desired_capacity
   min_capacity           = var.eks_min_capacity
   max_capacity           = var.eks_max_capacity
+  key_name               = var.key_name  # Also add this if you want SSH access
 }
 
 # Jenkins EC2 Module
