@@ -14,7 +14,9 @@ resource "aws_iam_role" "eks_cluster" {
   })
 
   tags = {
-    Name = "${var.project_name}-${var.environment}-eks-cluster-role"
+    Name        = "${var.project_name}-${var.environment}-eks-cluster-role"
+    Environment = var.environment
+    Project     = var.project_name
   }
 }
 
@@ -44,7 +46,9 @@ resource "aws_iam_role" "eks_node" {
   })
 
   tags = {
-    Name = "${var.project_name}-${var.environment}-eks-node-role"
+    Name        = "${var.project_name}-${var.environment}-eks-node-role"
+    Environment = var.environment
+    Project     = var.project_name
   }
 }
 
@@ -58,13 +62,87 @@ resource "aws_iam_role_policy_attachment" "eks_cni_policy" {
   role       = aws_iam_role.eks_node.name
 }
 
-resource "aws_iam_role_policy_attachment" "eks_container_registry_policy" {
+resource "aws_iam_role_policy_attachment" "eks_container_registry_readonly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.eks_node.name
 }
 
-# ECR Full Access for Nodes (to push/pull images)
-resource "aws_iam_role_policy_attachment" "eks_ecr_full_access" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"
-  role       = aws_iam_role.eks_node.name
+# Jenkins IAM Role
+resource "aws_iam_role" "jenkins" {
+  name = "${var.project_name}-${var.environment}-jenkins-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = {
+        Service = "ec2.amazonaws.com"
+      }
+    }]
+  })
+
+  tags = {
+    Name        = "${var.project_name}-${var.environment}-jenkins-role"
+    Environment = var.environment
+    Project     = var.project_name
+  }
+}
+
+# Jenkins Policy for ECR
+resource "aws_iam_role_policy" "jenkins_ecr" {
+  name = "${var.project_name}-${var.environment}-jenkins-ecr-policy"
+  role = aws_iam_role.jenkins.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "ecr:GetAuthorizationToken",
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:BatchGetImage",
+          "ecr:PutImage",
+          "ecr:InitiateLayerUpload",
+          "ecr:UploadLayerPart",
+          "ecr:CompleteLayerUpload"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+# Jenkins Policy for EKS
+resource "aws_iam_role_policy" "jenkins_eks" {
+  name = "${var.project_name}-${var.environment}-jenkins-eks-policy"
+  role = aws_iam_role.jenkins.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "eks:DescribeCluster",
+          "eks:ListClusters"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+# ✅ Jenkins Instance Profile - ఇది లేదు కాబట్టి error వచ్చింది
+resource "aws_iam_instance_profile" "jenkins" {
+  name = "${var.project_name}-${var.environment}-jenkins-profile"
+  role = aws_iam_role.jenkins.name
+
+  tags = {
+    Name        = "${var.project_name}-${var.environment}-jenkins-profile"
+    Environment = var.environment
+    Project     = var.project_name
+  }
 }
