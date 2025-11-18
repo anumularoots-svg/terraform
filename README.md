@@ -157,7 +157,8 @@ terraform/
 │       ├── variables.tf        # Jenkins variables
 │       └── outputs.tf          # Jenkins outputs
 
-<img width="1024" height="1024" alt="Gemini_Generated_Image_o7krvso7krvso7kr" src="https://github.com/user-attachments/assets/e7f067dd-418c-439d-943f-145fa96b6745" />
+<img width="1024" height="1024" alt="Gemini_Generated_Image_o7krvso7krvso7kr" src="https://github.com/user-attachments/assets/616d6e96-773b-4410-a8ef-fc5d0488af0e" />
+
 
 🚀 Installation
 Step 1: Clone the Repository
