@@ -34,7 +34,7 @@ resource "aws_instance" "jenkins" {
               sudo yum update -y
               
               # Install Java
-              sudo amazon-linux-extras install java-openjdk11 -y
+              sudo yum install -y java-17-amazon-corretto
               
               # Install Jenkins
               sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
