@@ -72,6 +72,9 @@ Key Features
 │  └───────────────┘  └───────────────┘  └───────────────┘  │
 └─────────────────────────────────────────────────────────────┘
 
+<img width="1024" height="1024" alt="Gemini_Generated_Image_qczyrdqczyrdqczy" src="https://github.com/user-attachments/assets/2d6ab567-8fe4-45fd-aae8-79d33f8bac9e" />
+
+
 📦 Prerequisites
 Required Software
 SoftwareVersionDownload LinkTerraform>= 1.0DownloadAWS CLI>= 2.0Downloadkubectl>= 1.28DownloadDocker>= 20.10DownloadGitLatestDownload
@@ -153,6 +156,8 @@ terraform/
 │       ├── main.tf             # Jenkins EC2 instance
 │       ├── variables.tf        # Jenkins variables
 │       └── outputs.tf          # Jenkins outputs
+
+<img width="1024" height="1024" alt="Gemini_Generated_Image_o7krvso7krvso7kr" src="https://github.com/user-attachments/assets/e7f067dd-418c-439d-943f-145fa96b6745" />
 
 🚀 Installation
 Step 1: Clone the Repository
