@@ -91,6 +91,7 @@ variable "jenkins_instance_type" {
 }
 
 variable "key_name" {
-  description = "SSH key pair name"
+  description = "SSH key pair name for EC2 and EKS nodes"
   type        = string
+  default     = ""  # ✅ ఇది add చేయండి - optional గా చేస్తుంది
 }
