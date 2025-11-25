@@ -608,31 +608,3 @@ k9s - Kubernetes CLI manager
 Lens - Kubernetes IDE
 Terraform Docs - Generate documentation
 tflint - Terraform linter
-
-
-🤝 Contributing
-
-Fork the repository
-Create a feature branch (git checkout -b feature/amazing-feature)
-Commit your changes (git commit -m 'Add amazing feature')
-Push to the branch (git push origin feature/amazing-feature)
-Open a Pull Request
-
-
-📄 License
-This project is licensed under the MIT License.
-
-👥 Support
-For issues and questions:
-
-Create an issue in GitHub
-Email: support@yourcompany.com
-Slack: #terraform-support
-
-
-🎉 Acknowledgments
-
-HashiCorp for Terraform
-AWS for cloud infrastructure
-Kubernetes community
-Jenkins community
